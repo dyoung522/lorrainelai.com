@@ -1,0 +1,39 @@
+# Ruby
+*.gem
+.bundle/
+vendor/bundle/
+
+# Rails
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Database
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Credentials
+/config/credentials.yml.enc
+/config/master.key
+.env
+.env.*
+.envrc
+
+# Active Storage (local dev only)
+/storage/*
+
+# Coverage & reports
+/coverage/
+
+# OS / editor noise
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Docker / Kamal
+.docker/
+.kamal/
+
