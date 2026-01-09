@@ -36,3 +36,12 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Node.js (Playwright only)
+node_modules/
+package-lock.json
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/

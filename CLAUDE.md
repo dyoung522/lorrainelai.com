@@ -53,7 +53,13 @@ bundle exec rspec spec/path/to/file_spec.rb
 bundle exec rspec spec/path/to/file_spec.rb:LINE_NUMBER
 
 # Frontend tests (Playwright)
-# Use Playwright MCP tools
+npm test
+
+# Interactive test mode
+npm run test:ui
+
+# Run tests in headed mode (see browser)
+npm run test:headed
 ```
 
 **Linting:**
