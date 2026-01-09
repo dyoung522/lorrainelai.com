@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Required Reading
+
+Before starting work on this project, read these supplemental guidance files:
+- **RUBY.md** - Ruby-specific best practices and idioms
+- **RAILS.md** - Rails conventions, especially the section on using encrypted credentials over ENV variables
+- **WEBUI.md** - Frontend/UI design guidelines
+
+These files are located in the parent directory (`/home/dyoung/.claude/`) and provide essential context for this Rails project.
+
 ## Project Overview
 
 Personal website (full-stack Rails) for Lorraine Lai. Phase 1 focuses on publishing content and syncing published posts from Substack.
