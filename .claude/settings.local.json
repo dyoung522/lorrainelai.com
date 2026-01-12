@@ -10,7 +10,6 @@
       "Bash(tail:*)",
       "Bash(stat:*)",
       "Bash(find:*)",
-
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
@@ -19,55 +18,54 @@
       "Bash(git checkout:*)",
       "Bash(git fetch:*)",
       "Bash(git pull:*)",
-
       "Bash(bundle install:*)",
       "Bash(bundle exec:*)",
       "Bash(bundle update:*)",
-
       "Bash(ruby:*)",
       "Bash(rake:*)",
       "Bash(rubocop:*)",
-
       "Bash(rails:*)",
       "Bash(bin/rails:*)",
-
       "Bash(docker ps:*)",
       "Bash(docker logs:*)",
       "Bash(docker inspect:*)",
       "Bash(docker compose ps:*)",
       "Bash(docker compose logs:*)",
-
       "Bash(kamal status:*)",
       "Bash(kamal logs:*)",
-      "Bash(kamal deploy:*)"
+      "Bash(kamal deploy:*)",
+      "Bash(plugin:github:*)",
+      "Bash(bundle list:*)",
+      "Bash(npm test)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Bash(bundle add:*)",
+      "Bash(RAILS_ENV=development bin/rails *)",
+      "mcp__plugin_github_github__search_repositories",
+      "mcp__plugin_github_github__create_repository",
+      "mcp__plugin_github_github__*"
     ],
-
     "deny": [
       "Bash(rm:*)",
       "Bash(rm -rf:*)",
       "Bash(rm -r:*)",
-
       "Bash(mv /:*)",
       "Bash(cp /:*)",
-
       "Bash(chmod -R:*)",
       "Bash(chown -R:*)",
-
       "Bash(dd:*)",
       "Bash(mkfs:*)",
       "Bash(mount:*)",
       "Bash(umount:*)",
-
       "Bash(shutdown:*)",
       "Bash(reboot:*)",
       "Bash(poweroff:*)",
-
       "Bash(sudo:*)",
-      "Bash(su:*)",
-
+      "Bash(su:*)"
+    ],
+    "ask": [
       "Bash(curl *| sh:*)",
       "Bash(wget *| sh:*)"
     ]
   }
 }
-
