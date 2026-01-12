@@ -28,7 +28,7 @@
                   <span class="text-text-secondary"><%= platform.name %></span>
                 </div>
                 <div class="flex gap-2">
-                  <%= link_to "Edit", edit_admin_custom_social_platform_path(platform), class: "text-xs text-text-muted hover:text-dusty-rose-dark" %>
+                  <%= link_to "Edit", edit_admin_custom_social_platform_path(platform), class: "text-xs text-text-muted hover:text-dusty-rose-dark", data: { turbo_frame: "_top" } %>
                   <%= button_to "Delete", admin_custom_social_platform_path(platform), method: :delete, class: "text-xs text-text-muted hover:text-red-500", data: { turbo_confirm: "Delete '#{platform.name}'?" } %>
                 </div>
               </div>
@@ -36,7 +36,7 @@
           </div>
         <% end %>
 
-        <%= link_to "+ Add custom platform", new_admin_custom_social_platform_path, class: "block text-center text-xs text-text-muted hover:text-dusty-rose-dark" %>
+        <%= link_to "+ Add custom platform", new_admin_custom_social_platform_path, class: "block text-center text-xs text-text-muted hover:text-dusty-rose-dark", data: { turbo_frame: "_top" } %>
         <p class="text-xs text-text-muted text-center mt-2">Add platforms with custom icons (SVG/PNG)</p>
       </div>
 
