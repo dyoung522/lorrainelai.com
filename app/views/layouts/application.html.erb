@@ -46,7 +46,7 @@
         <% if signed_in? %>
           <%= button_to "Logout", logout_path, method: :delete, class: "hover:text-dusty-rose-dark transition-colors" %>
         <% else %>
-          <%= link_to "Login", "/auth/google_oauth2", class: "hover:text-dusty-rose-dark transition-colors", data: { turbo: false } %>
+          <%= button_to "Login", "/auth/google_oauth2", method: :post, class: "hover:text-dusty-rose-dark transition-colors", data: { turbo: false } %>
         <% end %>
       </div>
     </footer>
