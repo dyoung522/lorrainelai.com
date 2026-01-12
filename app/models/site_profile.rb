@@ -22,4 +22,16 @@ class SiteProfile < ApplicationRecord
   def social_link_present?(platform)
     social_link(platform).present?
   end
+
+  # Get all custom links (not in SOCIAL_PLATFORMS)
+  def custom_links
+    return {} unless social_links.present?
+
+    social_links.reject { |key, _| SOCIAL_PLATFORMS.include?(key) }
+  end
+
+  # Check if any custom links exist
+  def custom_links?
+    custom_links.any? { |_, url| url.present? }
+  end
 end

@@ -117,4 +117,49 @@ RSpec.describe SiteProfile, type: :model do
       )
     end
   end
+
+  describe "#custom_links" do
+    let(:site_profile) do
+      SiteProfile.new(
+        social_links: {
+          "instagram" => "https://instagram.com/lorraine",
+          "bookshop" => "https://bookshop.org/shop/lorraine",
+          "website" => "https://example.com"
+        }
+      )
+    end
+
+    it "returns links that are not in SOCIAL_PLATFORMS" do
+      expect(site_profile.custom_links).to eq(
+        "bookshop" => "https://bookshop.org/shop/lorraine",
+        "website" => "https://example.com"
+      )
+    end
+
+    it "returns empty hash when social_links is nil" do
+      site_profile = SiteProfile.new(social_links: nil)
+      expect(site_profile.custom_links).to eq({})
+    end
+
+    it "excludes standard platforms from custom links" do
+      expect(site_profile.custom_links.keys).not_to include("instagram")
+    end
+  end
+
+  describe "#custom_links?" do
+    it "returns true when custom links with URLs exist" do
+      site_profile = SiteProfile.new(social_links: { "bookshop" => "https://example.com" })
+      expect(site_profile.custom_links?).to be true
+    end
+
+    it "returns false when custom links are blank" do
+      site_profile = SiteProfile.new(social_links: { "bookshop" => "", "instagram" => "https://instagram.com" })
+      expect(site_profile.custom_links?).to be false
+    end
+
+    it "returns false when no custom links exist" do
+      site_profile = SiteProfile.new(social_links: { "instagram" => "https://instagram.com" })
+      expect(site_profile.custom_links?).to be false
+    end
+  end
 end

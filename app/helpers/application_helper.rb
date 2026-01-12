@@ -61,15 +61,29 @@ module ApplicationHelper
   end
 
   def render_social_links(site_profile)
-    links = SiteProfile::SOCIAL_PLATFORMS.filter_map do |platform|
+    # Standard platform links with icons
+    icon_links = SiteProfile::SOCIAL_PLATFORMS.filter_map do |platform|
       url = site_profile.social_link(platform)
       social_link_icon(platform, url) if url.present?
     end
 
-    return nil if links.empty?
+    # Custom links (text only)
+    custom_links = site_profile.custom_links.filter_map do |name, url|
+      next if url.blank?
 
-    content_tag(:div, class: "flex gap-4 justify-center") do
-      safe_join(links)
+      content_tag(:a,
+        name.titleize,
+        href: url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        class: "text-text-secondary hover:text-dusty-rose-dark transition-colors text-sm")
+    end
+
+    all_links = icon_links + custom_links
+    return nil if all_links.empty?
+
+    content_tag(:div, class: "flex gap-4 justify-center items-center flex-wrap") do
+      safe_join(all_links)
     end
   end
 end
