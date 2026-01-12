@@ -1,4 +1,62 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-4xl font-bold">Welcome to Lorraine Lai</h1>
-  <p class="mt-4">Personal website and portfolio.</p>
+<% content_for :title, "Lorraine Lai" %>
+
+<div class="min-h-screen flex flex-col justify-center px-4 py-12 sm:py-16">
+  <div class="max-w-2xl mx-auto w-full">
+    <%# Profile Section %>
+    <section class="text-center mb-12">
+      <%# Profile Picture %>
+      <div class="mb-8">
+        <% if @site_profile.profile_picture.attached? %>
+          <%= image_tag @site_profile.profile_picture,
+                        class: "w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto object-cover shadow-lg border-4 border-white",
+                        alt: "Lorraine Lai" %>
+        <% else %>
+          <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center">
+            <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
+          </div>
+        <% end %>
+      </div>
+
+      <%# Name %>
+      <h1 class="text-3xl sm:text-4xl font-light tracking-wide text-text-primary mb-3">
+        Lorraine Lai
+      </h1>
+
+      <%# Tagline %>
+      <% if @site_profile.tagline.present? %>
+        <p class="text-lg sm:text-xl text-text-secondary font-light italic">
+          <%= @site_profile.tagline %>
+        </p>
+      <% end %>
+    </section>
+
+    <%# Social Links %>
+    <% if SiteProfile::SOCIAL_PLATFORMS.any? { |p| @site_profile.social_link_present?(p) } %>
+      <section class="mb-12">
+        <%= render_social_links(@site_profile) %>
+      </section>
+    <% end %>
+
+    <%# About Section %>
+    <% if @site_profile.about_me.present? %>
+      <section class="mb-12">
+        <div class="bg-white/50 rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light">
+          <h2 class="text-lg font-medium text-text-primary mb-4 text-center">About</h2>
+          <div class="text-text-secondary leading-relaxed space-y-4">
+            <%= simple_format(@site_profile.about_me, class: "text-center") %>
+          </div>
+        </div>
+      </section>
+    <% end %>
+
+    <%# Featured Links / CTAs (placeholder for Feature 5) %>
+    <section class="text-center">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <%= link_to "Musings", "#",
+                    class: "px-8 py-3 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-full transition-colors shadow-sm font-medium" %>
+        <%= link_to "Gallery", "#",
+                    class: "px-8 py-3 bg-soft-blue hover:bg-soft-blue-dark text-text-primary rounded-full transition-colors shadow-sm font-medium" %>
+      </div>
+    </section>
+  </div>
 </div>
