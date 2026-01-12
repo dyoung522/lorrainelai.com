@@ -5,6 +5,7 @@ class SiteProfile < ApplicationRecord
 
   has_one_attached :profile_picture
   has_many :featured_links, dependent: :destroy
+  has_many :custom_social_platforms, dependent: :destroy
 
   validates :tagline, length: { maximum: 200 }
 

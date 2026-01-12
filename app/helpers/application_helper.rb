@@ -67,24 +67,25 @@ module ApplicationHelper
       social_link_icon(platform, url) if url.present?
     end
 
-    # Custom links (with optional emoji icons)
-    custom_links = site_profile.custom_links.filter_map do |name, value|
-      url = site_profile.custom_link_url(value)
-      icon = site_profile.custom_link_icon(value)
-      next if url.blank?
-
-      display_text = icon.present? ? "#{icon} #{name.titleize}" : name.titleize
+    # Custom social platforms (with uploaded icons)
+    custom_platform_links = site_profile.custom_social_platforms.filter_map do |platform|
+      next unless platform.url.present?
 
       content_tag(:a,
-        display_text,
-        href: url,
+        href: platform.url,
         target: "_blank",
         rel: "noopener noreferrer",
-        class: "text-text-secondary hover:text-dusty-rose-dark transition-colors text-sm",
-        title: name.titleize)
+        class: "text-text-secondary hover:text-dusty-rose-dark transition-colors",
+        title: platform.name) do
+        if platform.icon.attached?
+          image_tag(platform.icon, class: "size-6", alt: platform.name)
+        else
+          content_tag(:span, platform.name, class: "text-sm")
+        end
+      end
     end
 
-    all_links = icon_links + custom_links
+    all_links = icon_links + custom_platform_links
     return nil if all_links.empty?
 
     content_tag(:div, class: "flex gap-4 justify-center items-center flex-wrap") do

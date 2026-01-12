@@ -1,0 +1,44 @@
+<%= form_with model: [:admin, custom_social_platform], class: "space-y-4" do |form| %>
+  <% if custom_social_platform.errors.any? %>
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+      <ul class="text-red-700 text-sm">
+        <% custom_social_platform.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, class: "block text-sm font-medium text-text-primary mb-1" %>
+    <%= form.text_field :name,
+                        class: "w-full px-4 py-2 rounded-lg border border-border focus:border-dusty-rose focus:outline-none focus:ring-2 focus:ring-dusty-rose/20",
+                        placeholder: "e.g., Bookshop" %>
+  </div>
+
+  <div>
+    <%= form.label :url, class: "block text-sm font-medium text-text-primary mb-1" %>
+    <%= form.url_field :url,
+                       class: "w-full px-4 py-2 rounded-lg border border-border focus:border-dusty-rose focus:outline-none focus:ring-2 focus:ring-dusty-rose/20",
+                       placeholder: "https://bookshop.org/shop/yourshop" %>
+  </div>
+
+  <div>
+    <%= form.label :icon, "Icon (SVG or PNG, 24x24 recommended)", class: "block text-sm font-medium text-text-primary mb-1" %>
+    <% if custom_social_platform.icon.attached? %>
+      <div class="mb-2 flex items-center gap-2">
+        <span class="text-xs text-text-muted">Current:</span>
+        <%= image_tag custom_social_platform.icon, class: "size-6" %>
+      </div>
+    <% end %>
+    <%= form.file_field :icon,
+                        accept: "image/svg+xml,image/png,image/jpeg",
+                        class: "w-full px-4 py-2 rounded-lg border border-border focus:border-dusty-rose focus:outline-none focus:ring-2 focus:ring-dusty-rose/20 text-sm" %>
+    <p class="mt-1 text-xs text-text-muted">Upload an SVG or PNG icon. For best results, use a 24x24 pixel image.</p>
+  </div>
+
+  <div class="flex justify-end gap-3 pt-2">
+    <%= link_to "Cancel", root_path, class: "px-4 py-2 text-text-secondary hover:text-text-primary" %>
+    <%= form.submit class: "px-6 py-2 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-full transition-colors cursor-pointer" %>
+  </div>
+<% end %>

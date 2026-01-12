@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get "edit_field", on: :member
     end
     resources :featured_links, except: [:index, :show]
+    resources :custom_social_platforms, except: [:index, :show]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
