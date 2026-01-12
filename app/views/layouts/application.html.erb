@@ -36,13 +36,6 @@
       </div>
     <% end %>
 
-    <%# Auth controls %>
-    <% if signed_in? %>
-      <nav class="fixed top-4 right-4 z-40">
-        <%= button_to "Sign out", logout_path, method: :delete, class: "text-sm text-text-muted hover:text-text-secondary transition-colors" %>
-      </nav>
-    <% end %>
-
     <main>
       <%= yield %>
     </main>
@@ -51,9 +44,9 @@
     <footer class="py-8 text-center">
       <div class="text-sm text-text-muted">
         <% if signed_in? %>
-          <%= link_to "Edit All Settings", edit_admin_site_profile_path, class: "hover:text-dusty-rose-dark transition-colors" %>
+          <%= button_to "Logout", logout_path, method: :delete, class: "hover:text-dusty-rose-dark transition-colors" %>
         <% else %>
-          <%= link_to "Admin", "/auth/google_oauth2", class: "hover:text-dusty-rose-dark transition-colors", data: { turbo: false } %>
+          <%= link_to "Login", "/auth/google_oauth2", class: "hover:text-dusty-rose-dark transition-colors", data: { turbo: false } %>
         <% end %>
       </div>
     </footer>
