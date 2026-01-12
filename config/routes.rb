@@ -6,6 +6,14 @@ Rails.application.routes.draw do
   get "/auth/failure", to: "sessions#failure"
   delete "/logout", to: "sessions#destroy", as: :logout
 
+  # Admin routes for inline editing
+  namespace :admin do
+    resource :site_profile, only: [:edit, :update] do
+      get "edit_field", on: :member
+    end
+    resources :featured_links, except: [:index, :show]
+  end
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

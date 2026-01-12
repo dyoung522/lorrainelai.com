@@ -5,17 +5,26 @@
     <%# Profile Section %>
     <section class="text-center mb-12">
       <%# Profile Picture %>
-      <div class="mb-8">
-        <% if @site_profile.profile_picture.attached? %>
-          <%= image_tag @site_profile.profile_picture,
-                        class: "w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto object-cover shadow-lg border-4 border-white",
-                        alt: "Lorraine Lai" %>
-        <% else %>
-          <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center">
-            <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
-          </div>
-        <% end %>
-      </div>
+      <%= turbo_frame_tag "profile_picture" do %>
+        <div class="mb-8 relative group">
+          <% if @site_profile.profile_picture.attached? %>
+            <%= image_tag @site_profile.profile_picture,
+                          class: "w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto object-cover shadow-lg border-4 border-white",
+                          alt: "Lorraine Lai" %>
+          <% else %>
+            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center">
+              <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
+            </div>
+          <% end %>
+          <% if signed_in? %>
+            <%= link_to edit_field_admin_site_profile_path(field: "profile_picture"),
+                        class: "absolute inset-0 flex items-center justify-center bg-black/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity",
+                        data: { turbo_frame: "profile_picture" } do %>
+              <span class="text-white text-sm font-medium">Change Photo</span>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
 
       <%# Name %>
       <h1 class="text-3xl sm:text-4xl font-light tracking-wide text-text-primary mb-3">
@@ -23,40 +32,133 @@
       </h1>
 
       <%# Tagline %>
-      <% if @site_profile.tagline.present? %>
-        <p class="text-lg sm:text-xl text-text-secondary font-light italic">
-          <%= @site_profile.tagline %>
-        </p>
+      <%= turbo_frame_tag "tagline" do %>
+        <div class="relative group">
+          <% if @site_profile.tagline.present? %>
+            <p class="text-lg sm:text-xl text-text-secondary font-light italic">
+              <%= @site_profile.tagline %>
+            </p>
+          <% else %>
+            <% if signed_in? %>
+              <p class="text-lg text-text-muted italic">Add a tagline...</p>
+            <% end %>
+          <% end %>
+          <% if signed_in? %>
+            <%= link_to edit_field_admin_site_profile_path(field: "tagline"),
+                        class: "inline-block ml-2 text-text-muted hover:text-dusty-rose-dark opacity-0 group-hover:opacity-100 transition-opacity",
+                        data: { turbo_frame: "tagline" },
+                        title: "Edit tagline" do %>
+              <svg class="size-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            <% end %>
+          <% end %>
+        </div>
       <% end %>
     </section>
 
     <%# Social Links %>
-    <% if SiteProfile::SOCIAL_PLATFORMS.any? { |p| @site_profile.social_link_present?(p) } %>
-      <section class="mb-12">
-        <%= render_social_links(@site_profile) %>
-      </section>
+    <%= turbo_frame_tag "social_links" do %>
+      <% if SiteProfile::SOCIAL_PLATFORMS.any? { |p| @site_profile.social_link_present?(p) } %>
+        <section class="mb-12 relative group">
+          <%= render_social_links(@site_profile) %>
+          <% if signed_in? %>
+            <%= link_to edit_field_admin_site_profile_path(field: "social_links"),
+                        class: "absolute -right-8 top-1/2 -translate-y-1/2 text-text-muted hover:text-dusty-rose-dark opacity-0 group-hover:opacity-100 transition-opacity",
+                        data: { turbo_frame: "social_links" },
+                        title: "Edit social links" do %>
+              <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            <% end %>
+          <% end %>
+        </section>
+      <% elsif signed_in? %>
+        <section class="mb-12 text-center">
+          <%= link_to edit_field_admin_site_profile_path(field: "social_links"),
+                      class: "text-text-muted hover:text-dusty-rose-dark text-sm",
+                      data: { turbo_frame: "social_links" } do %>
+            + Add social links
+          <% end %>
+        </section>
+      <% end %>
     <% end %>
 
     <%# About Section %>
-    <% if @site_profile.about_me.present? %>
-      <section class="mb-12">
-        <div class="bg-white/50 rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light">
-          <h2 class="text-lg font-medium text-text-primary mb-4 text-center">About</h2>
-          <div class="text-text-secondary leading-relaxed space-y-4">
-            <%= simple_format(@site_profile.about_me, class: "text-center") %>
+    <%= turbo_frame_tag "about_me" do %>
+      <% if @site_profile.about_me.present? %>
+        <section class="mb-12 relative group">
+          <div class="bg-white/50 rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light">
+            <h2 class="text-lg font-medium text-text-primary mb-4 text-center">About</h2>
+            <div class="text-text-secondary leading-relaxed space-y-4">
+              <%= simple_format(@site_profile.about_me, class: "text-center") %>
+            </div>
           </div>
-        </div>
-      </section>
+          <% if signed_in? %>
+            <%= link_to edit_field_admin_site_profile_path(field: "about_me"),
+                        class: "absolute top-4 right-4 text-text-muted hover:text-dusty-rose-dark opacity-0 group-hover:opacity-100 transition-opacity",
+                        data: { turbo_frame: "about_me" },
+                        title: "Edit about section" do %>
+              <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            <% end %>
+          <% end %>
+        </section>
+      <% elsif signed_in? %>
+        <section class="mb-12 text-center">
+          <%= link_to edit_field_admin_site_profile_path(field: "about_me"),
+                      class: "text-text-muted hover:text-dusty-rose-dark text-sm",
+                      data: { turbo_frame: "about_me" } do %>
+            + Add about section
+          <% end %>
+        </section>
+      <% end %>
     <% end %>
 
-    <%# Featured Links / CTAs (placeholder for Feature 5) %>
-    <section class="text-center">
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <%= link_to "Musings", "#",
-                    class: "px-8 py-3 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-full transition-colors shadow-sm font-medium" %>
-        <%= link_to "Gallery", "#",
-                    class: "px-8 py-3 bg-soft-blue hover:bg-soft-blue-dark text-text-primary rounded-full transition-colors shadow-sm font-medium" %>
+    <%# Featured Links / CTAs %>
+    <%= turbo_frame_tag "featured_links" do %>
+      <% if @site_profile.featured_links.any? %>
+        <section class="text-center relative group">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
+            <% @site_profile.featured_links.each_with_index do |link, index| %>
+              <% bg_class = index.even? ? "bg-dusty-rose hover:bg-dusty-rose-dark" : "bg-soft-blue hover:bg-soft-blue-dark" %>
+              <%= link_to link.title, link.url,
+                          class: "px-8 py-3 #{bg_class} text-text-primary rounded-full transition-colors shadow-sm font-medium",
+                          target: "_blank",
+                          rel: "noopener noreferrer" %>
+            <% end %>
+          </div>
+          <% if signed_in? %>
+            <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center gap-2">
+              <% @site_profile.featured_links.each do |link| %>
+                <%= link_to edit_admin_featured_link_path(link),
+                            class: "text-xs text-text-muted hover:text-dusty-rose-dark" do %>
+                  Edit "<%= link.title %>"
+                <% end %>
+                <%= button_to admin_featured_link_path(link),
+                              method: :delete,
+                              class: "text-xs text-text-muted hover:text-red-500",
+                              data: { turbo_confirm: "Delete '#{link.title}'?" } do %>
+                  Delete
+                <% end %>
+              <% end %>
+              <%= link_to "+ Add Link", new_admin_featured_link_path, class: "text-xs text-text-muted hover:text-dusty-rose-dark ml-2" %>
+            </div>
+          <% end %>
+        </section>
+      <% elsif signed_in? %>
+        <section class="text-center">
+          <%= link_to "+ Add featured links", new_admin_featured_link_path, class: "text-text-muted hover:text-dusty-rose-dark text-sm" %>
+        </section>
+      <% end %>
+    <% end %>
+
+    <%# Admin link to full edit page %>
+    <% if signed_in? %>
+      <div class="mt-12 text-center">
+        <%= link_to "Edit All Settings", edit_admin_site_profile_path, class: "text-sm text-text-muted hover:text-dusty-rose-dark" %>
       </div>
-    </section>
+    <% end %>
   </div>
 </div>

@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "social_links" do %>
+  <%= form_with model: site_profile, url: admin_site_profile_path, data: { controller: "inline-edit" } do |form| %>
+    <div class="bg-white/50 rounded-2xl p-6 shadow-sm border border-border-light max-w-md mx-auto">
+      <h3 class="text-sm font-medium text-text-primary mb-4 text-center">Social Links</h3>
+      <div class="space-y-3">
+        <% SiteProfile::SOCIAL_PLATFORMS.each do |platform| %>
+          <div class="flex items-center gap-2">
+            <label class="w-20 text-xs text-text-muted capitalize"><%= platform.titleize %></label>
+            <%= form.text_field "social_links[#{platform}]", value: site_profile.social_link(platform), class: "flex-1 px-3 py-1.5 rounded-lg border border-border bg-white focus:outline-none focus:ring-2 focus:ring-dusty-rose text-sm", placeholder: "URL" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="flex gap-2 justify-center mt-4">
+        <%= form.submit "Save", class: "px-4 py-2 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-lg transition-colors text-sm cursor-pointer" %>
+        <%= link_to "Cancel", root_path, class: "px-4 py-2 bg-gray-200 hover:bg-gray-300 text-text-primary rounded-lg transition-colors text-sm", data: { turbo_frame: "social_links" } %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

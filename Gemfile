@@ -63,3 +63,8 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
+
+gem "stimulus-rails", "~> 1.3"
+gem "turbo-rails", "~> 2.0"
+
+gem "importmap-rails", "~> 2.2"

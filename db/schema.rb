@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_12_214714) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_12_221518) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -39,6 +39,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_214714) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "featured_links", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "position", default: 0, null: false
+    t.integer "site_profile_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.string "url", null: false
+    t.index ["site_profile_id", "position"], name: "index_featured_links_on_site_profile_id_and_position"
+    t.index ["site_profile_id"], name: "index_featured_links_on_site_profile_id"
+  end
+
   create_table "site_profiles", force: :cascade do |t|
     t.text "about_me"
     t.datetime "created_at", null: false
@@ -60,4 +71,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_214714) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "featured_links", "site_profiles"
 end

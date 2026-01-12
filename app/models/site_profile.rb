@@ -4,6 +4,7 @@ class SiteProfile < ApplicationRecord
   SOCIAL_PLATFORMS = %w[instagram linkedin twitter youtube substack].freeze
 
   has_one_attached :profile_picture
+  has_many :featured_links, dependent: :destroy
 
   validates :tagline, length: { maximum: 200 }
 
