@@ -123,17 +123,14 @@ RSpec.describe SiteProfile, type: :model do
       SiteProfile.new(
         social_links: {
           "instagram" => "https://instagram.com/lorraine",
-          "bookshop" => "https://bookshop.org/shop/lorraine",
+          "bookshop" => { "url" => "https://bookshop.org/shop/lorraine", "icon" => "📚" },
           "website" => "https://example.com"
         }
       )
     end
 
     it "returns links that are not in SOCIAL_PLATFORMS" do
-      expect(site_profile.custom_links).to eq(
-        "bookshop" => "https://bookshop.org/shop/lorraine",
-        "website" => "https://example.com"
-      )
+      expect(site_profile.custom_links.keys).to match_array(%w[bookshop website])
     end
 
     it "returns empty hash when social_links is nil" do
@@ -147,8 +144,13 @@ RSpec.describe SiteProfile, type: :model do
   end
 
   describe "#custom_links?" do
-    it "returns true when custom links with URLs exist" do
+    it "returns true when custom links with URLs exist (string format)" do
       site_profile = SiteProfile.new(social_links: { "bookshop" => "https://example.com" })
+      expect(site_profile.custom_links?).to be true
+    end
+
+    it "returns true when custom links with URLs exist (hash format)" do
+      site_profile = SiteProfile.new(social_links: { "bookshop" => { "url" => "https://example.com", "icon" => "📚" } })
       expect(site_profile.custom_links?).to be true
     end
 
@@ -157,9 +159,42 @@ RSpec.describe SiteProfile, type: :model do
       expect(site_profile.custom_links?).to be false
     end
 
+    it "returns false when custom links have blank URLs (hash format)" do
+      site_profile = SiteProfile.new(social_links: { "bookshop" => { "url" => "", "icon" => "📚" } })
+      expect(site_profile.custom_links?).to be false
+    end
+
     it "returns false when no custom links exist" do
       site_profile = SiteProfile.new(social_links: { "instagram" => "https://instagram.com" })
       expect(site_profile.custom_links?).to be false
+    end
+  end
+
+  describe "#custom_link_url" do
+    let(:site_profile) { SiteProfile.new }
+
+    it "extracts URL from string value" do
+      expect(site_profile.custom_link_url("https://example.com")).to eq("https://example.com")
+    end
+
+    it "extracts URL from hash value" do
+      expect(site_profile.custom_link_url({ "url" => "https://example.com", "icon" => "📚" })).to eq("https://example.com")
+    end
+  end
+
+  describe "#custom_link_icon" do
+    let(:site_profile) { SiteProfile.new }
+
+    it "returns nil for string value" do
+      expect(site_profile.custom_link_icon("https://example.com")).to be_nil
+    end
+
+    it "extracts icon from hash value" do
+      expect(site_profile.custom_link_icon({ "url" => "https://example.com", "icon" => "📚" })).to eq("📚")
+    end
+
+    it "returns nil when hash has no icon" do
+      expect(site_profile.custom_link_icon({ "url" => "https://example.com" })).to be_nil
     end
   end
 end
