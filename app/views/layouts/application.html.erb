@@ -46,5 +46,16 @@
     <main>
       <%= yield %>
     </main>
+
+    <%# Footer %>
+    <footer class="py-8 text-center">
+      <div class="text-sm text-text-muted">
+        <% if signed_in? %>
+          <%= link_to "Edit All Settings", edit_admin_site_profile_path, class: "hover:text-dusty-rose-dark transition-colors" %>
+        <% else %>
+          <%= link_to "Admin", "/auth/google_oauth2", class: "hover:text-dusty-rose-dark transition-colors", data: { turbo: false } %>
+        <% end %>
+      </div>
+    </footer>
   </body>
 </html>
