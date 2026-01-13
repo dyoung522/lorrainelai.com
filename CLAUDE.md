@@ -62,12 +62,25 @@ npm run test:ui
 npm run test:headed
 ```
 
-**Linting:**
+**Linting & Security:**
 ```bash
+# RuboCop style check
 bundle exec rubocop
 
 # Auto-fix
 bundle exec rubocop -a
+
+# Security scan (Brakeman)
+bin/brakeman
+
+# Gem vulnerability audit
+bin/bundler-audit
+```
+
+**Full CI Pipeline:**
+```bash
+# Runs: setup, rubocop, bundler-audit, brakeman
+bin/ci
 ```
 
 **Credentials Management:**
@@ -106,6 +119,13 @@ All secrets are stored in Rails encrypted credentials, NOT environment variables
 
 ### Authentication
 - Admin authentication via Google OAuth using Rails defaults
+- Authorized emails stored in encrypted credentials (`admin_emails` array)
+
+### Key Models
+- **SiteProfile**: Singleton pattern (`SiteProfile.instance`) - stores tagline, about_me, social_links
+- **FeaturedLink**: Ordered links displayed as CTA buttons on home page
+- **CustomSocialPlatform**: User-defined social platforms beyond the built-in ones
+- **User**: OAuth users (provider, uid, email)
 
 ## Critical Constraints
 
@@ -113,6 +133,39 @@ All secrets are stored in Rails encrypted credentials, NOT environment variables
 2. **Migrations**: Append-only once merged. Never modify existing migrations in main branch.
 3. **Storage**: SQLite DB on local persistent storage only. Media on S3-compatible object storage only.
 4. **Testing**: Backend (RSpec), Frontend (Playwright). All ingestion logic must have test coverage.
+
+## Frontend Architecture
+
+### Stimulus Controllers
+Controllers live in `app/javascript/controllers/` and are auto-loaded via importmap. Key controllers:
+- `theme_controller.js` - Dark mode toggle with system preference detection
+- `flash_controller.js` - Auto-dismiss flash messages
+- `image_cropper_controller.js` - Profile picture cropping with Cropper.js
+- `inline_edit_controller.js` - Inline editing functionality
+
+### CSS & Theming
+- **Tailwind config**: `app/assets/tailwind/application.css` defines custom theme colors
+- **Dark mode**: Uses CSS variable overrides in `html.dark` selector, toggled via Stimulus
+- **Color palette**: Custom pastel colors (dusty-rose, soft-blue, sage, etc.) with dark variants
+
+### UI Patterns
+- **Admin edit buttons**: Use `opacity-0 group-hover:opacity-100` pattern for hover reveal
+- **Touch device support**: `@media (hover: none)` shows edit buttons at 70% opacity on touch devices
+- **Flash messages**: Auto-dismiss via CSS animation (5s duration)
+
+### E2E Tests
+Playwright tests in `e2e/` directory:
+- `home.spec.js` - Home page functionality
+- `dark-mode.spec.js` - Theme switching tests
+- `profile-picture-crop.spec.js` - Image cropping tests
+
+## Gotchas & Patterns
+
+1. **Stimulus controllers**: Initialize properties (like `this.mediaQuery`) BEFORE calling methods that depend on them in `connect()`
+2. **Dynamic render paths**: Always whitelist allowed values to avoid Brakeman security warnings (see `EDITABLE_FIELDS` in `site_profiles_controller.rb`)
+3. **RuboCop style**: Uses Rails Omakase style - requires spaces inside array brackets `[ :a, :b ]`
+4. **SiteProfile is a singleton**: Always use `SiteProfile.instance`, never `SiteProfile.new`
+5. **Social platforms constant**: `SiteProfile::SOCIAL_PLATFORMS` defines built-in platforms (instagram, linkedin, twitter, youtube, substack)
 
 ## Frontend Guidelines
 
