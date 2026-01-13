@@ -31,3 +31,13 @@
   outline: 2px solid rgba(255, 255, 255, 0.8);
   outline-offset: -2px;
 }
+
+/* Flash message auto-dismiss animation */
+@keyframes appear-then-fade {
+  0%, 100% { opacity: 0; }
+  10%, 80% { opacity: 1; }
+}
+
+.flash-message {
+  animation: appear-then-fade 5s both;
+}

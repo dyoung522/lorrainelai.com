@@ -27,14 +27,20 @@
   </head>
 
   <body class="bg-warm-white text-text-primary min-h-screen">
-    <%# Flash messages %>
+    <%# Flash messages with auto-dismiss %>
     <% if notice.present? %>
-      <div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-sage border border-sage text-text-primary px-6 py-3 rounded-lg shadow-sm" role="alert">
+      <div class="flash-message fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-sage border border-sage text-text-primary px-6 py-3 rounded-lg shadow-sm"
+           role="alert"
+           data-controller="flash"
+           data-action="animationend->flash#remove">
         <%= notice %>
       </div>
     <% end %>
     <% if alert.present? %>
-      <div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-dusty-rose border border-dusty-rose-dark text-text-primary px-6 py-3 rounded-lg shadow-sm" role="alert">
+      <div class="flash-message fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-dusty-rose border border-dusty-rose-dark text-text-primary px-6 py-3 rounded-lg shadow-sm"
+           role="alert"
+           data-controller="flash"
+           data-action="animationend->flash#remove">
         <%= alert %>
       </div>
     <% end %>
