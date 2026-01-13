@@ -20,3 +20,14 @@
   --color-border: #e0dcd8;
   --color-border-light: #f0ece8;
 }
+
+/* Cropper.js customizations for circular profile picture */
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
+
+.cropper-view-box {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: -2px;
+}

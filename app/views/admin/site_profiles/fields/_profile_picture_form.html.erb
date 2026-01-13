@@ -1,22 +1,69 @@
 <%= turbo_frame_tag "profile_picture" do %>
-  <%= form_with model: site_profile, url: admin_site_profile_path, data: { controller: "image-upload" } do |form| %>
-    <div class="text-center">
-      <div class="mb-4">
-        <% if site_profile.profile_picture.attached? %>
-          <%= image_tag site_profile.profile_picture, class: "w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto object-cover shadow-lg border-4 border-white", data: { image_upload_target: "preview" } %>
-        <% else %>
-          <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center" data-image-upload-target="preview">
-            <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
+  <div data-controller="image-cropper"
+       data-image-cropper-aspect-ratio-value="1"
+       data-image-cropper-output-size-value="400">
+
+    <%= form_with model: site_profile, url: admin_site_profile_path, data: { image_cropper_target: "form" } do |form| %>
+      <div class="text-center">
+        <%# Current picture (hidden when cropping) %>
+        <div data-image-cropper-target="currentPreview" class="mb-4">
+          <% if site_profile.profile_picture.attached? %>
+            <%= image_tag site_profile.profile_picture, class: "w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto object-cover shadow-lg border-4 border-white" %>
+          <% else %>
+            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center">
+              <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# File input %>
+        <%= form.file_field :profile_picture, accept: "image/*",
+            class: "block w-full text-sm text-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-dusty-rose file:text-text-primary hover:file:bg-dusty-rose-dark",
+            data: { image_cropper_target: "input", action: "change->image-cropper#handleFileSelect" } %>
+
+        <%# Cropper Container (hidden initially) %>
+        <div data-image-cropper-target="container" class="hidden mt-4">
+          <%# Full-screen on mobile, inline on desktop %>
+          <div class="fixed inset-0 z-50 bg-black/90 flex flex-col sm:relative sm:inset-auto sm:bg-transparent sm:z-auto">
+            <%# Cropper area %>
+            <div class="flex-1 flex items-center justify-center p-4 sm:p-0">
+              <img data-image-cropper-target="preview" class="max-w-full max-h-[60vh] sm:max-h-[300px]" src="" alt="Crop preview">
+            </div>
+
+            <%# Controls %>
+            <div class="p-4 bg-white sm:bg-transparent sm:mt-4">
+              <p class="text-sm text-text-muted text-center mb-3 sm:hidden">Drag to position, pinch to zoom</p>
+              <p class="text-sm text-text-muted text-center mb-3 hidden sm:block">Drag to position, use buttons to zoom</p>
+              <div class="flex justify-center gap-4 mb-4">
+                <button type="button" data-action="click->image-cropper#zoomOut"
+                        class="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-xl font-bold transition-colors">
+                  <span aria-hidden="true">&minus;</span>
+                  <span class="sr-only">Zoom out</span>
+                </button>
+                <button type="button" data-action="click->image-cropper#zoomIn"
+                        class="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-xl font-bold transition-colors">
+                  <span aria-hidden="true">+</span>
+                  <span class="sr-only">Zoom in</span>
+                </button>
+              </div>
+              <div class="flex gap-2 justify-center">
+                <button type="button" data-action="click->image-cropper#submit"
+                        class="px-6 py-2 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-lg transition-colors font-medium">
+                  Save
+                </button>
+                <button type="button" data-action="click->image-cropper#cancel"
+                        class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-text-primary rounded-lg transition-colors">
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
-        <% end %>
-      </div>
-      <div class="space-y-3">
-        <%= form.file_field :profile_picture, accept: "image/*", class: "block w-full text-sm text-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-dusty-rose file:text-text-primary hover:file:bg-dusty-rose-dark", data: { image_upload_target: "input", action: "change->image-upload#preview" } %>
-        <div class="flex gap-2 justify-center">
-          <%= form.submit "Upload", class: "px-4 py-2 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-lg transition-colors text-sm cursor-pointer" %>
-          <%= link_to "Cancel", root_path, class: "px-4 py-2 bg-gray-200 hover:bg-gray-300 text-text-primary rounded-lg transition-colors text-sm", data: { turbo_frame: "profile_picture" } %>
+        </div>
+
+        <div class="mt-3">
+          <%= link_to "Cancel", root_path, class: "text-sm text-text-muted hover:text-text-secondary", data: { turbo_frame: "profile_picture" } %>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 <% end %>
