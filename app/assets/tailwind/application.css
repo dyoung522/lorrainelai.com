@@ -105,6 +105,16 @@ html.dark .text-white {
   color: var(--color-dark-text-primary);
 }
 
+/* Dark mode for gray buttons (Cancel, zoom, etc.) */
+html.dark .bg-gray-200 {
+  background-color: rgb(55, 65, 81); /* gray-700 */
+}
+
+html.dark .bg-gray-200:hover,
+html.dark .hover\:bg-gray-300:hover {
+  background-color: rgb(75, 85, 99); /* gray-600 */
+}
+
 /* Dark mode for red error states */
 html.dark .bg-red-50 {
   background-color: rgba(127, 29, 29, 0.3);
