@@ -41,3 +41,15 @@
 .flash-message {
   animation: appear-then-fade 5s both;
 }
+
+/* Show edit buttons on touch devices (no hover capability) */
+@media (hover: none) {
+  .group .group-hover\:opacity-100 {
+    opacity: 0.7;
+  }
+
+  .group .group-hover\:opacity-100:hover,
+  .group .group-hover\:opacity-100:active {
+    opacity: 1;
+  }
+}
