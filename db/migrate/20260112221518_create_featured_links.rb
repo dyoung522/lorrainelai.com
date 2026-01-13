@@ -9,6 +9,6 @@ class CreateFeaturedLinks < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :featured_links, [:site_profile_id, :position]
+    add_index :featured_links, [ :site_profile_id, :position ]
   end
 end

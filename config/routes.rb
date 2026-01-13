@@ -8,11 +8,11 @@ Rails.application.routes.draw do
 
   # Admin routes for inline editing
   namespace :admin do
-    resource :site_profile, only: [:edit, :update] do
+    resource :site_profile, only: [ :edit, :update ] do
       get "edit_field", on: :member
     end
-    resources :featured_links, except: [:index, :show]
-    resources :custom_social_platforms, except: [:index, :show]
+    resources :featured_links, except: [ :index, :show ]
+    resources :custom_social_platforms, except: [ :index, :show ]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

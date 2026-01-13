@@ -54,7 +54,7 @@ RSpec.describe CustomSocialPlatform, type: :model do
       platform1 = CustomSocialPlatform.create!(name: "First", url: "https://a.com", position: 1, site_profile: site_profile)
       platform2 = CustomSocialPlatform.create!(name: "Second", url: "https://b.com", position: 2, site_profile: site_profile)
 
-      expect(CustomSocialPlatform.all).to eq([platform1, platform2, platform3])
+      expect(CustomSocialPlatform.all).to eq([ platform1, platform2, platform3 ])
     end
   end
 

@@ -23,7 +23,7 @@ RSpec.describe "Admin::FeaturedLinks", type: :request do
     allow(Rails.application.credentials).to receive(:dig).and_call_original
     allow(Rails.application.credentials).to receive(:dig)
       .with(:admin_emails)
-      .and_return(["admin@example.com"])
+      .and_return([ "admin@example.com" ])
     get "/auth/google_oauth2/callback"
   end
 

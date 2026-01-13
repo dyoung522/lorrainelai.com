@@ -32,7 +32,7 @@ RSpec.describe "Sessions", type: :request do
       before do
         allow(Rails.application.credentials).to receive(:dig)
           .with(:admin_emails)
-          .and_return(["lorraine@example.com"])
+          .and_return([ "lorraine@example.com" ])
       end
 
       it "creates a user and signs them in" do
@@ -59,7 +59,7 @@ RSpec.describe "Sessions", type: :request do
       before do
         allow(Rails.application.credentials).to receive(:dig)
           .with(:admin_emails)
-          .and_return(["other@example.com"])
+          .and_return([ "other@example.com" ])
       end
 
       it "does not set the session" do
@@ -92,7 +92,7 @@ RSpec.describe "Sessions", type: :request do
       # Simulate being logged in
       allow(Rails.application.credentials).to receive(:dig)
         .with(:admin_emails)
-        .and_return(["test@example.com"])
+        .and_return([ "test@example.com" ])
       OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
         provider: "google_oauth2",
         uid: "123",

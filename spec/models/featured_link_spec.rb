@@ -60,7 +60,7 @@ RSpec.describe FeaturedLink, type: :model do
       link1 = FeaturedLink.create!(title: "First", url: "https://a.com", position: 1, site_profile: site_profile)
       link2 = FeaturedLink.create!(title: "Second", url: "https://b.com", position: 2, site_profile: site_profile)
 
-      expect(FeaturedLink.all).to eq([link1, link2, link3])
+      expect(FeaturedLink.all).to eq([ link1, link2, link3 ])
     end
   end
 

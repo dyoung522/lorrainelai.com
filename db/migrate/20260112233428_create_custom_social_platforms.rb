@@ -9,6 +9,6 @@ class CreateCustomSocialPlatforms < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :custom_social_platforms, [:site_profile_id, :position]
+    add_index :custom_social_platforms, [ :site_profile_id, :position ]
   end
 end

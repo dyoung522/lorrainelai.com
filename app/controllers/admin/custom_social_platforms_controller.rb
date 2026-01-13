@@ -4,7 +4,7 @@ module Admin
   class CustomSocialPlatformsController < ApplicationController
     before_action :require_authentication
     before_action :set_site_profile
-    before_action :set_custom_social_platform, only: [:edit, :update, :destroy]
+    before_action :set_custom_social_platform, only: [ :edit, :update, :destroy ]
 
     def new
       @custom_social_platform = @site_profile.custom_social_platforms.build

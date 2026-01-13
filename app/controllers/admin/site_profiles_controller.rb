@@ -2,6 +2,8 @@
 
 module Admin
   class SiteProfilesController < ApplicationController
+    EDITABLE_FIELDS = %w[tagline about_me social_links profile_picture].freeze
+
     before_action :require_authentication
     before_action :set_site_profile
 
@@ -21,6 +23,10 @@ module Admin
 
     def edit_field
       @field = params[:field]
+      unless EDITABLE_FIELDS.include?(@field)
+        head :not_found
+        return
+      end
       render partial: "admin/site_profiles/fields/#{@field}_form", locals: { site_profile: @site_profile }
     end
 

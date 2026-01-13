@@ -4,7 +4,7 @@ module Admin
   class FeaturedLinksController < ApplicationController
     before_action :require_authentication
     before_action :set_site_profile
-    before_action :set_featured_link, only: [:edit, :update, :destroy]
+    before_action :set_featured_link, only: [ :edit, :update, :destroy ]
 
     def new
       @featured_link = @site_profile.featured_links.build
