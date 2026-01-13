@@ -24,9 +24,39 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app %>
     <%= javascript_importmap_tags %>
+
+    <%# Apply theme immediately to prevent flash of wrong theme %>
+    <script>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
 
   <body class="bg-warm-white text-text-primary min-h-screen">
+    <%# Theme toggle in header %>
+    <header class="fixed top-4 right-4 z-40" data-controller="theme">
+      <button type="button"
+              data-action="click->theme#toggle"
+              class="p-2 rounded-full bg-white/50 hover:bg-white/80 text-text-muted hover:text-text-primary transition-colors shadow-sm"
+              title="Toggle dark mode">
+        <%# Sun icon - shown in dark mode to switch to light %>
+        <svg data-theme-target="sunIcon" class="size-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <%# Moon icon - shown in light mode to switch to dark %>
+        <svg data-theme-target="moonIcon" class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+    </header>
+
     <%# Flash messages with auto-dismiss %>
     <% if notice.present? %>
       <div class="flash-message fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-sage border border-sage text-text-primary px-6 py-3 rounded-lg shadow-sm"

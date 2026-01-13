@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Soft pastel color palette */
+  /* Soft pastel color palette - Light mode */
   --color-warm-white: #faf9f7;
   --color-dusty-rose: #e8d5d5;
   --color-dusty-rose-dark: #d4b5b5;
@@ -19,6 +19,20 @@
   /* UI colors */
   --color-border: #e0dcd8;
   --color-border-light: #f0ece8;
+
+  /* Dark mode colors */
+  --color-dark-bg: #1a1a2e;
+  --color-dark-surface: #252542;
+  --color-dark-dusty-rose: #4a3f4f;
+  --color-dark-dusty-rose-dark: #5a4a5f;
+  --color-dark-soft-blue: #3a4a5a;
+  --color-dark-soft-blue-dark: #4a5a6a;
+  --color-dark-sage: #3a4a3a;
+  --color-dark-text-primary: #e8e6e3;
+  --color-dark-text-secondary: #b8b5b0;
+  --color-dark-text-muted: #888580;
+  --color-dark-border: #3a3a4a;
+  --color-dark-border-light: #2a2a3a;
 }
 
 /* Cropper.js customizations for circular profile picture */
@@ -52,4 +66,54 @@
   .group .group-hover\:opacity-100:active {
     opacity: 1;
   }
+}
+
+/* Dark mode styles - applied when .dark class is on html element */
+html.dark {
+  /* Background colors */
+  --color-warm-white: var(--color-dark-bg);
+  --color-dusty-rose: var(--color-dark-dusty-rose);
+  --color-dusty-rose-dark: var(--color-dark-dusty-rose-dark);
+  --color-soft-blue: var(--color-dark-soft-blue);
+  --color-soft-blue-dark: var(--color-dark-soft-blue-dark);
+  --color-sage: var(--color-dark-sage);
+
+  /* Text colors */
+  --color-text-primary: var(--color-dark-text-primary);
+  --color-text-secondary: var(--color-dark-text-secondary);
+  --color-text-muted: var(--color-dark-text-muted);
+
+  /* Border colors */
+  --color-border: var(--color-dark-border);
+  --color-border-light: var(--color-dark-border-light);
+}
+
+/* Dark mode overrides for specific elements */
+html.dark .bg-white\/50 {
+  background-color: rgba(37, 37, 66, 0.5);
+}
+
+html.dark .bg-white {
+  background-color: var(--color-dark-surface);
+}
+
+html.dark .border-white {
+  border-color: var(--color-dark-border);
+}
+
+html.dark .text-white {
+  color: var(--color-dark-text-primary);
+}
+
+/* Dark mode for red error states */
+html.dark .bg-red-50 {
+  background-color: rgba(127, 29, 29, 0.3);
+}
+
+html.dark .border-red-200 {
+  border-color: rgba(185, 28, 28, 0.5);
+}
+
+html.dark .text-red-700 {
+  color: #fca5a5;
 }
