@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Enable Tailwind's dark: variant to work with .dark class on html element */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Soft pastel color palette - Light mode */
   --color-warm-white: #faf9f7;
@@ -88,42 +91,3 @@ html.dark {
   --color-border-light: var(--color-dark-border-light);
 }
 
-/* Dark mode overrides for specific elements */
-html.dark .bg-white\/50 {
-  background-color: rgba(37, 37, 66, 0.5);
-}
-
-html.dark .bg-white {
-  background-color: var(--color-dark-surface);
-}
-
-html.dark .border-white {
-  border-color: var(--color-dark-border);
-}
-
-html.dark .text-white {
-  color: var(--color-dark-text-primary);
-}
-
-/* Dark mode for gray buttons (Cancel, zoom, etc.) */
-html.dark .bg-gray-200 {
-  background-color: rgb(55, 65, 81); /* gray-700 */
-}
-
-html.dark .bg-gray-200:hover,
-html.dark .hover\:bg-gray-300:hover {
-  background-color: rgb(75, 85, 99); /* gray-600 */
-}
-
-/* Dark mode for red error states */
-html.dark .bg-red-50 {
-  background-color: rgba(127, 29, 29, 0.3);
-}
-
-html.dark .border-red-200 {
-  border-color: rgba(185, 28, 28, 0.5);
-}
-
-html.dark .text-red-700 {
-  color: #fca5a5;
-}
