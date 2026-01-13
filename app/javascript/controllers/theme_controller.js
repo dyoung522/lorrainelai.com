@@ -6,11 +6,13 @@ export default class extends Controller {
   static targets = ["sunIcon", "moonIcon"]
 
   connect() {
+    // Set up media query first (used by getCurrentTheme)
+    this.mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+
     this.applyTheme()
     this.updateIcons()
 
     // Listen for system preference changes
-    this.mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
     this.handleSystemChange = this.handleSystemChange.bind(this)
     this.mediaQuery.addEventListener("change", this.handleSystemChange)
   }
