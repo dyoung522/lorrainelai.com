@@ -10,10 +10,10 @@
           <div class="relative group w-32 h-32 sm:w-40 sm:h-40">
             <% if @site_profile.profile_picture.attached? %>
               <%= image_tag @site_profile.profile_picture,
-                            class: "w-full h-full rounded-full object-cover shadow-lg border-4 border-white",
+                            class: "w-full h-full rounded-full object-cover shadow-lg border-4 border-white dark:border-gray-700",
                             alt: "Lorraine Lai" %>
             <% else %>
-              <div class="w-full h-full rounded-full bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center">
+              <div class="w-full h-full rounded-full bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white dark:border-gray-700 flex items-center justify-center">
                 <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
               </div>
             <% end %>
@@ -90,7 +90,7 @@
     <%= turbo_frame_tag "about_me" do %>
       <% if @site_profile.about_me.present? %>
         <section class="mb-12 relative group">
-          <div class="bg-white/50 rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light">
+          <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 sm:p-8 shadow-sm border border-border-light">
             <h2 class="text-lg font-medium text-text-primary mb-4 text-center">About</h2>
             <div class="text-text-secondary leading-relaxed space-y-4">
               <%= simple_format(@site_profile.about_me, class: "text-center") %>

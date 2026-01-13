@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "tagline" do %>
   <%= form_with model: site_profile, url: admin_site_profile_path, data: { controller: "inline-edit", action: "turbo:submit-end->inline-edit#reset" } do |form| %>
     <div class="flex flex-col sm:flex-row gap-2 items-center justify-center">
-      <%= form.text_field :tagline, class: "px-4 py-2 rounded-lg border border-border bg-white focus:outline-none focus:ring-2 focus:ring-dusty-rose text-center w-full sm:w-96", placeholder: "Your tagline", autofocus: true %>
+      <%= form.text_field :tagline, class: "px-4 py-2 rounded-lg border border-border bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-dusty-rose text-center w-full sm:w-96", placeholder: "Your tagline", autofocus: true %>
       <div class="flex gap-2">
         <%= form.submit "Save", class: "px-4 py-2 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-lg transition-colors text-sm cursor-pointer" %>
         <%= link_to "Cancel", root_path, class: "px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-text-primary rounded-lg transition-colors text-sm", data: { turbo_frame: "tagline" } %>
