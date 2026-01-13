@@ -5,7 +5,7 @@
       <%= form.text_area :about_me, rows: 8, class: "w-full px-4 py-2 rounded-lg border border-border bg-white focus:outline-none focus:ring-2 focus:ring-dusty-rose mb-4", placeholder: "Tell visitors about yourself..." %>
       <div class="flex gap-2 justify-center">
         <%= form.submit "Save", class: "px-4 py-2 bg-dusty-rose hover:bg-dusty-rose-dark text-text-primary rounded-lg transition-colors text-sm cursor-pointer" %>
-        <%= link_to "Cancel", root_path, class: "px-4 py-2 bg-gray-200 hover:bg-gray-300 text-text-primary rounded-lg transition-colors text-sm", data: { turbo_frame: "about_me" } %>
+        <%= link_to "Cancel", root_path, class: "px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-text-primary rounded-lg transition-colors text-sm", data: { turbo_frame: "about_me" } %>
       </div>
     </div>
   <% end %>
