@@ -113,7 +113,7 @@ RSpec.describe SiteProfile, type: :model do
   describe "social platforms" do
     it "defines the supported social platforms" do
       expect(SiteProfile::SOCIAL_PLATFORMS).to eq(
-        %w[instagram linkedin twitter youtube substack]
+        %w[instagram linkedin twitter youtube substack bookshop]
       )
     end
   end
@@ -123,14 +123,14 @@ RSpec.describe SiteProfile, type: :model do
       SiteProfile.new(
         social_links: {
           "instagram" => "https://instagram.com/lorraine",
-          "bookshop" => { "url" => "https://bookshop.org/shop/lorraine", "icon" => "📚" },
+          "podcast" => { "url" => "https://podcast.example.com", "icon" => "🎙️" },
           "website" => "https://example.com"
         }
       )
     end
 
     it "returns links that are not in SOCIAL_PLATFORMS" do
-      expect(site_profile.custom_links.keys).to match_array(%w[bookshop website])
+      expect(site_profile.custom_links.keys).to match_array(%w[podcast website])
     end
 
     it "returns empty hash when social_links is nil" do
@@ -145,22 +145,22 @@ RSpec.describe SiteProfile, type: :model do
 
   describe "#custom_links?" do
     it "returns true when custom links with URLs exist (string format)" do
-      site_profile = SiteProfile.new(social_links: { "bookshop" => "https://example.com" })
+      site_profile = SiteProfile.new(social_links: { "podcast" => "https://example.com" })
       expect(site_profile.custom_links?).to be true
     end
 
     it "returns true when custom links with URLs exist (hash format)" do
-      site_profile = SiteProfile.new(social_links: { "bookshop" => { "url" => "https://example.com", "icon" => "📚" } })
+      site_profile = SiteProfile.new(social_links: { "podcast" => { "url" => "https://example.com", "icon" => "🎙️" } })
       expect(site_profile.custom_links?).to be true
     end
 
     it "returns false when custom links are blank" do
-      site_profile = SiteProfile.new(social_links: { "bookshop" => "", "instagram" => "https://instagram.com" })
+      site_profile = SiteProfile.new(social_links: { "podcast" => "", "instagram" => "https://instagram.com" })
       expect(site_profile.custom_links?).to be false
     end
 
     it "returns false when custom links have blank URLs (hash format)" do
-      site_profile = SiteProfile.new(social_links: { "bookshop" => { "url" => "", "icon" => "📚" } })
+      site_profile = SiteProfile.new(social_links: { "podcast" => { "url" => "", "icon" => "🎙️" } })
       expect(site_profile.custom_links?).to be false
     end
 

@@ -41,6 +41,14 @@ module ApplicationHelper
           <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
         </svg>
       SVG
+    },
+    "bookshop" => {
+      name: "Bookshop.org",
+      icon: <<~SVG
+        <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 2h2v20H6V2zm2 0h6c2.5 0 4.5 1.5 4.5 4s-1.5 4-4 4h-2v0h2c3 0 5 2 5 5s-2.5 5-5.5 5H8v-4h5c1.5 0 2.5-1 2.5-2s-1-2-2.5-2H8V8h4.5c1.2 0 2-0.8 2-1.8S13.7 4.5 12.5 4.5H8V2z"/>
+        </svg>
+      SVG
     }
   }.freeze
 

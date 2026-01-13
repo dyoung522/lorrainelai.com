@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SiteProfile < ApplicationRecord
-  SOCIAL_PLATFORMS = %w[instagram linkedin twitter youtube substack].freeze
+  SOCIAL_PLATFORMS = %w[instagram linkedin twitter youtube substack bookshop].freeze
 
   has_one_attached :profile_picture
   has_many :featured_links, dependent: :destroy
@@ -26,8 +26,8 @@ class SiteProfile < ApplicationRecord
 
   # Get all custom links (not in SOCIAL_PLATFORMS)
   # Custom links can be either:
-  #   - String (just URL): { "bookshop" => "https://..." }
-  #   - Hash (with icon): { "bookshop" => { "url" => "https://...", "icon" => "📚" } }
+  #   - String (just URL): { "mysite" => "https://..." }
+  #   - Hash (with icon): { "mysite" => { "url" => "https://...", "icon" => "🔗" } }
   def custom_links
     return {} unless social_links.present?
 
