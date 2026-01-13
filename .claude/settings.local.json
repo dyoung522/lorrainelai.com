@@ -46,7 +46,6 @@
       "mcp__plugin_github_github__*"
     ],
     "deny": [
-      "Bash(rm:*)",
       "Bash(rm -rf:*)",
       "Bash(rm -r:*)",
       "Bash(mv /:*)",
@@ -64,6 +63,7 @@
       "Bash(su:*)"
     ],
     "ask": [
+      "Bash(rm:*)",
       "Bash(curl *| sh:*)",
       "Bash(wget *| sh:*)"
     ]

@@ -6,23 +6,25 @@
     <section class="text-center mb-12">
       <%# Profile Picture %>
       <%= turbo_frame_tag "profile_picture" do %>
-        <div class="mb-8 relative group">
-          <% if @site_profile.profile_picture.attached? %>
-            <%= image_tag @site_profile.profile_picture,
-                          class: "w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto object-cover shadow-lg border-4 border-white",
-                          alt: "Lorraine Lai" %>
-          <% else %>
-            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center">
-              <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
-            </div>
-          <% end %>
-          <% if signed_in? %>
-            <%= link_to edit_field_admin_site_profile_path(field: "profile_picture"),
-                        class: "absolute inset-0 flex items-center justify-center bg-black/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity",
-                        data: { turbo_frame: "profile_picture" } do %>
-              <span class="text-white text-sm font-medium">Change Photo</span>
+        <div class="mb-8 flex justify-center">
+          <div class="relative group w-32 h-32 sm:w-40 sm:h-40">
+            <% if @site_profile.profile_picture.attached? %>
+              <%= image_tag @site_profile.profile_picture,
+                            class: "w-full h-full rounded-full object-cover shadow-lg border-4 border-white",
+                            alt: "Lorraine Lai" %>
+            <% else %>
+              <div class="w-full h-full rounded-full bg-gradient-to-br from-dusty-rose to-soft-blue shadow-lg border-4 border-white flex items-center justify-center">
+                <span class="text-4xl sm:text-5xl text-white font-light">LL</span>
+              </div>
             <% end %>
-          <% end %>
+            <% if signed_in? %>
+              <%= link_to edit_field_admin_site_profile_path(field: "profile_picture"),
+                          class: "absolute inset-0 flex items-center justify-center bg-black/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity",
+                          data: { turbo_frame: "profile_picture" } do %>
+                <span class="text-white text-sm font-medium">Change Photo</span>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       <% end %>
 
