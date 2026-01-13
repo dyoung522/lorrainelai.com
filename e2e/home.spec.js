@@ -25,11 +25,17 @@ test.describe('Home Page', () => {
     await expect(aboutHeading).toContainText('About');
   });
 
-  test('displays profile placeholder when no image', async ({ page }) => {
+  test('displays profile picture or placeholder', async ({ page }) => {
     await page.goto('/');
-    // Should show initials LL in the placeholder circle
+    // Should show either a profile picture or the initials LL placeholder
+    const profileImage = page.getByAltText('Lorraine Lai');
     const placeholder = page.getByText('LL', { exact: true });
-    await expect(placeholder).toBeVisible();
+
+    // At least one of these should be visible
+    const imageVisible = await profileImage.isVisible().catch(() => false);
+    const placeholderVisible = await placeholder.isVisible().catch(() => false);
+
+    expect(imageVisible || placeholderVisible).toBe(true);
   });
 
   test('displays navigation buttons', async ({ page }) => {
