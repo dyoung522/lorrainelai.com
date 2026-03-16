@@ -30,12 +30,12 @@ unless SiteProfile.exists?
   site_profile = SiteProfile.instance
   site_profile.featured_links.create!(
     title: "Musings",
-    url: "https://example.com/musings",
+    url: "/musings",
     position: 1
   )
   site_profile.featured_links.create!(
     title: "Gallery",
-    url: "https://example.com/gallery",
+    url: "/gallery",
     position: 2
   )
   puts "Created sample featured links"
