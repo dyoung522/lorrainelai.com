@@ -5,8 +5,8 @@ class FeaturedLink < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 100 }
   validates :url, presence: true, format: {
-    with: /\Ahttps?:\/\/[^\s]+\z/,
-    message: "is not a valid URL"
+    with: /\A(https?:\/\/[^\s]+|\/[^\s]*)\z/,
+    message: "is not a valid URL or path"
   }
 
   default_scope { order(:position) }

@@ -26,7 +26,7 @@ RSpec.describe FeaturedLink, type: :model do
     it "validates url format" do
       link = FeaturedLink.new(title: "My Blog", url: "not-a-url", position: 1, site_profile: site_profile)
       expect(link).not_to be_valid
-      expect(link.errors[:url]).to include("is not a valid URL")
+      expect(link.errors[:url]).to include("is not a valid URL or path")
     end
 
     it "accepts valid URLs" do

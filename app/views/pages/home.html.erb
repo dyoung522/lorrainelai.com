@@ -125,10 +125,12 @@
           <div class="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
             <% @site_profile.featured_links.each_with_index do |link, index| %>
               <% bg_class = index.even? ? "bg-dusty-rose hover:bg-dusty-rose-dark" : "bg-soft-blue hover:bg-soft-blue-dark" %>
+              <% external = link.url.start_with?('http') %>
               <%= link_to link.title, link.url,
                           class: "px-8 py-3 #{bg_class} text-text-primary rounded-full transition-colors shadow-sm font-medium",
-                          target: "_blank",
-                          rel: "noopener noreferrer" %>
+                          target: (external ? '_blank' : nil),
+                          rel: (external ? 'noopener noreferrer' : nil),
+                          data: { turbo_frame: '_top' } %>
             <% end %>
           </div>
           <% if signed_in? %>
