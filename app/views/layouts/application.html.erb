@@ -38,6 +38,14 @@
   </head>
 
   <body class="bg-warm-white text-text-primary min-h-screen">
+    <%# Navigation %>
+    <nav class="fixed top-4 left-4 z-40 flex gap-3">
+      <%= link_to "Home", root_path,
+                  class: "text-sm px-3 py-1.5 rounded-full bg-white/50 dark:bg-gray-700/50 hover:bg-white/80 dark:hover:bg-gray-600/80 text-text-muted hover:text-text-primary transition-colors shadow-sm" %>
+      <%= link_to "Musings", musings_path,
+                  class: "text-sm px-3 py-1.5 rounded-full bg-white/50 dark:bg-gray-700/50 hover:bg-white/80 dark:hover:bg-gray-600/80 text-text-muted hover:text-text-primary transition-colors shadow-sm" %>
+    </nav>
+
     <%# Theme toggle in header %>
     <header class="fixed top-4 right-4 z-40" data-controller="theme">
       <button type="button"

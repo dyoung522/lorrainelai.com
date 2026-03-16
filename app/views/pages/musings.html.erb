@@ -1,0 +1,69 @@
+<% content_for :title, "Musings - Lorraine Lai" %>
+
+<div class="min-h-screen px-4 py-12 sm:py-16">
+  <div class="max-w-3xl mx-auto w-full">
+    <header class="text-center mb-12">
+      <h1 class="text-3xl sm:text-4xl font-light tracking-wide text-text-primary mb-3">Musings</h1>
+      <p class="text-text-secondary font-light">Thoughts, reflections, and stories</p>
+    </header>
+
+    <% if @posts.any? %>
+      <div class="space-y-8">
+        <% @posts.each do |post| %>
+          <article class="bg-white/50 dark:bg-gray-800/50 rounded-2xl shadow-sm border border-border-light overflow-hidden">
+            <% if post.cover_image_url.present? %>
+              <div class="aspect-[2/1] overflow-hidden">
+                <img src="<%= post.cover_image_url %>"
+                     alt="<%= post.title %>"
+                     class="w-full h-full object-cover"
+                     loading="lazy">
+              </div>
+            <% end %>
+
+            <div class="p-6 sm:p-8">
+              <h2 class="text-xl sm:text-2xl font-medium text-text-primary mb-2">
+                <%= link_to post.title, post.substack_url,
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            class: "hover:text-dusty-rose-dark transition-colors" %>
+              </h2>
+
+              <% if post.description.present? %>
+                <p class="text-text-secondary font-light italic mb-3"><%= post.description %></p>
+              <% end %>
+
+              <% if post.excerpt.present? %>
+                <p class="text-text-secondary leading-relaxed mb-4"><%= truncate(post.excerpt, length: 200) %></p>
+              <% end %>
+
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-text-muted">
+                <% if post.published_at.present? %>
+                  <time datetime="<%= post.published_at.iso8601 %>">
+                    <%= post.published_at.strftime("%B %-d, %Y") %>
+                  </time>
+                <% end %>
+
+                <% if post.reading_time_minutes.present? %>
+                  <span><%= post.reading_time_minutes %> min read</span>
+                <% end %>
+
+                <% if post.paywall? %>
+                  <span class="text-dusty-rose-dark">Subscribers only</span>
+                <% end %>
+
+                <%= link_to "Read on Substack &rarr;".html_safe, post.substack_url,
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            class: "ml-auto text-dusty-rose-dark hover:text-text-primary transition-colors font-medium" %>
+              </div>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-16">
+        <p class="text-text-muted text-lg">No musings yet. Check back soon!</p>
+      </div>
+    <% end %>
+  </div>
+</div>

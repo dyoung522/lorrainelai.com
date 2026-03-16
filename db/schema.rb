@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_12_233428) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_16_173441) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -59,6 +59,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_233428) do
     t.string "url", null: false
     t.index ["site_profile_id", "position"], name: "index_featured_links_on_site_profile_id_and_position"
     t.index ["site_profile_id"], name: "index_featured_links_on_site_profile_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "author"
+    t.string "cover_image_url"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.text "excerpt"
+    t.integer "likes", default: 0
+    t.boolean "paywall", default: false
+    t.datetime "published_at"
+    t.integer "reading_time_minutes"
+    t.string "slug", null: false
+    t.string "substack_url", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
   create_table "site_profiles", force: :cascade do |t|

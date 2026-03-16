@@ -65,4 +65,66 @@ RSpec.describe "Pages", type: :request do
       end
     end
   end
+
+  describe "GET /musings" do
+    it "returns http success" do
+      get musings_path
+      expect(response).to have_http_status(:success)
+    end
+
+    it "displays the page title" do
+      get musings_path
+      expect(response.body).to include("Musings")
+    end
+
+    context "with published posts" do
+      before do
+        Post.create!(
+          title: "My First Musing",
+          slug: "my-first-musing",
+          description: "A thoughtful post",
+          excerpt: "This is the beginning of a great post about life and times.",
+          substack_url: "https://example.substack.com/p/my-first-musing",
+          published_at: 1.day.ago,
+          reading_time_minutes: 5,
+          author: "Lorraine Lai",
+          cover_image_url: "https://cdn.substack.com/image/cover.jpg"
+        )
+        Post.create!(
+          title: "Draft Post",
+          slug: "draft-post",
+          substack_url: "https://example.substack.com/p/draft-post",
+          published_at: nil
+        )
+      end
+
+      it "displays published posts" do
+        get musings_path
+        expect(response.body).to include("My First Musing")
+      end
+
+      it "does not display unpublished posts" do
+        get musings_path
+        expect(response.body).not_to include("Draft Post")
+      end
+
+      it "displays post metadata" do
+        get musings_path
+        expect(response.body).to include("5 min read")
+        expect(response.body).to include("Read on Substack")
+      end
+
+      it "links to the Substack post" do
+        get musings_path
+        expect(response.body).to include("https://example.substack.com/p/my-first-musing")
+      end
+    end
+
+    context "with no posts" do
+      it "displays an empty state message" do
+        get musings_path
+        expect(response.body).to include("No musings yet")
+      end
+    end
+  end
 end
